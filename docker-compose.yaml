@@ -1,0 +1,10 @@
+services:
+  otel-collector:
+    image: rabbitexporter_ocb
+    build: ./rabbitexporter
+    command: [ "--config=/etc/otelcol-config.yaml" ]
+    volumes:
+      - ./rabbitexporter/otel-config.yaml:/etc/otelcol-config.yaml
+    ports:
+      - "8080:8080"
+      - "13132:13132"
