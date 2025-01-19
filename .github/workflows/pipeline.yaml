@@ -28,11 +28,12 @@ jobs:
       version: ${{ steps.conventional_changelog.outputs.version }}
 
   docker:
-    runs-on: ubuntu-24.04
     strategy:
       matrix:
         # image represents the name of the image produced as well as the directory containing its Dockerfile
         image: [rabbitexporter]
+        runner: ['ubuntu-24.04-arm', 'ubuntu-24.04']
+    runs-on: ${{ matrix.runner }}
     needs: tag
     steps:
       - name: Login to Scaleway Container Registry
@@ -53,9 +54,9 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v6
         with:
-          platforms: linux/amd64,linux/arm64
           context: ./${{ matrix.image }}
           file: ./${{ matrix.image }}/Dockerfile
+          cache-from: type=registry,ref=${{ env.IMAGE_REGISTRY }}/${{ matrix.image }}:latest
           push: true
           tags: |
             ${{ env.IMAGE_REGISTRY }}/${{ matrix.image }}:latest
