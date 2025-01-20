@@ -8,6 +8,6 @@ exporters:
 processors:
   - gomod: go.opentelemetry.io/collector/processor/batchprocessor v0.117.0
 receivers:
-  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/exporter/rabbitmqreceiver v0.117.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/rabbitmqreceiver v0.117.0
 extensions:
     - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/extension/healthcheckv2extension v0.117.0
