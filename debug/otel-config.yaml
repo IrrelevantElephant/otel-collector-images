@@ -1,0 +1,37 @@
+receivers:
+  k8sobjects:
+    auth_type: serviceAccount
+    objects:
+      - name: events
+        mode: watch
+        group: events.k8s.io
+
+processors:
+  batch:
+
+exporters:
+  rabbitmq:
+
+extensions:
+  healthcheckv2:
+    use_v2: true
+    http:
+      endpoint: "0.0.0.0:8080"
+      status:
+        enabled: true
+        path: "/health"
+    grpc:
+      endpoint: "0.0.0.0:13132"
+      transport: "tcp"
+
+service:
+  pipelines:
+    logs:
+      receivers:
+      - k8sobjects
+      processors:
+      - batch
+      exporters:
+      - rabbitmq
+  extensions:
+  - healthcheckv2
