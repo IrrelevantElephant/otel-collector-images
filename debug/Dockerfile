@@ -6,6 +6,6 @@ RUN ocb --config=./manifest.yaml
 
 FROM ubuntu:24.04 AS final
 WORKDIR /ocb
-COPY --from=builder ["/home/ocb/_build/otel-contrib", "./ocb"]
+COPY --from=builder ["/build/_build/otelcol-contrib", "./ocb"]
 ENTRYPOINT [ "./bin/bash" ]
 EXPOSE 8080
